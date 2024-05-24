@@ -48,7 +48,8 @@ mark,
 
 .title {
     color: #D2E4E1;
-    font-size: 28px;
+    font-family: "Iceland", sans-serif;
+    font-size: 42px;
     font-weight: 400;
     letter-spacing: 8px;
 }
@@ -113,17 +114,23 @@ mark,
     border-radius: 100%;
 }
 
-@keyframes check-svg-circle-anim {
+@keyframes circle-anim-on {
     0% {
         stroke-dasharray: 0 2023;
     }
 
-    /* 50% {
-        stroke-dasharray: 1011 1012;
-    } */
-
     100% {
         stroke-dasharray: 2023 0;
+    }
+}
+
+@keyframes circle-anim-off {
+    0% {
+        stroke-dasharray: 2023 0;
+    }
+
+    100% {
+        stroke-dasharray: 0 2023;
     }
 }
 

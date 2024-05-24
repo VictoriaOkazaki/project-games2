@@ -8,10 +8,6 @@ const text3 = document.querySelector('.text-3');
 
 const startBtn = document.querySelector('.start-btn');
 
-circleEl.addEventListener("animationend", () => {
-    // powerIconEl.style.fill = "grey";
-});
-
 function randomIntFromInterval(min, max) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -23,6 +19,7 @@ let seconds = 0;
 const min = document.getElementById('mins');
 const sec = document.getElementById('seconds');
 const h = document.getElementById('hours');
+let timex;
 
 function startTimer() {
     timex = setTimeout(function () {
@@ -53,11 +50,47 @@ function startTimer() {
     }, 1000);
 }
 
+const clearTimer = () => {
+    clearTimeout(timex);
+    min.innerHTML = '00:'
+    sec.innerHTML = '00'
+    h.innerHTML = '00:'
+    hours = 0;
+    mins = 0;
+    seconds = 0;
+}
+
+let state = 'off';
+
+startBtn.onclick = () => {
+    if (state !== 'on') return;
+    window.location.href = 'https://google.com'
+}
+
 const containerEl = document.querySelector(".big-btn__cont");
 containerEl.onclick = () => {
-    // circleEl.style.animation = `3s ease-in-out 0.5s 1 normal forwards running check-svg-circle-anim`;
+    if (state === 'animation') return;
+    if (state === 'on') {
+        state = 'animation'
+        clearTimer();
+        text2.innerHTML = 'Отключение...';
+        startBtn.classList.remove('start-btn-active');
+        text3.innerHTML = 'Осталось <mark>0.0/0.0</mark> GB ⚡';
+        circleEl.style.animation = `circle-anim-off 3s ease-in-out`;
 
-    circleEl.style.animation = `check-svg-circle-anim 3s ease-in-out forwards`;
+        const onAnimEnd = () => {
+            circleEl.removeEventListener("animationend", onAnimEnd);
+            powerIconEl.style.fill = "#C3C7C6";
+            svgCircle.classList.remove('circle-glow');
+            text2.innerHTML = 'Отключено';
+            state = 'off';
+        }
+        circleEl.addEventListener("animationend", onAnimEnd);
+
+        return;
+    }
+    state = 'animation';
+    circleEl.style.animation = `circle-anim-on 3s ease-in-out forwards`;
     text2.innerHTML = 'Проверка соединения...';
     text3.innerHTML = 'Подключение к удаленному серверу 10%';
     setTimeout(() => {
@@ -77,6 +110,7 @@ containerEl.onclick = () => {
         text2.innerHTML = 'Подключено';
         startTimer();
         startBtn.classList.add('start-btn-active');
+        state = 'on';
     }, 2800);
 
     setTimeout(() => {
