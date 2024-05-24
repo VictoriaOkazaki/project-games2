@@ -1,3 +1,7 @@
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 const circleEl = document.querySelector(".check-svg-circle");
 const powerIconEl = document.querySelector(".power-icon");
 const svgCircle = document.querySelector('.svg-circle');
@@ -68,14 +72,14 @@ startBtn.onclick = () => {
 }
 
 const containerEl = document.querySelector(".big-btn__cont");
-containerEl.onclick = () => {
+containerEl.onclick = async () => {
     if (state === 'animation') return;
     if (state === 'on') {
         state = 'animation'
         clearTimer();
         text2.innerHTML = 'Отключение...';
         startBtn.classList.remove('start-btn-active');
-        text3.innerHTML = 'Осталось <mark>0.0/0.0</mark> GB ⚡';
+        text3.innerHTML = 'Режим взлома';
         circleEl.style.animation = `circle-anim-off 3s ease-in-out`;
 
         const onAnimEnd = () => {
@@ -90,31 +94,33 @@ containerEl.onclick = () => {
         return;
     }
     state = 'animation';
-    circleEl.style.animation = `circle-anim-on 3s ease-in-out forwards`;
+    circleEl.style.animation = `circle-anim-on 5s ease-in-out forwards`;
     text2.innerHTML = 'Проверка соединения...';
-    text3.innerHTML = 'Подключение к удаленному серверу 10%';
-    setTimeout(() => {
-        text3.innerHTML = `Обработка ресурсов ${randomIntFromInterval(10, 100)}%`;
-    }, 600);
-    setTimeout(() => {
-        text3.innerHTML = `Запрос данных с серверов ${randomIntFromInterval(10, 100)}%`;
-    }, 1200);
-    setTimeout(() => {
-        text3.innerHTML = `Запрос данных с серверов ${randomIntFromInterval(10, 100)}%`;
-    }, 1800);
-    setTimeout(() => {
-        text3.innerHTML = `Подбор зеркала казино ${randomIntFromInterval(10, 100)}%`;
-    }, 2400);
-    setTimeout(() => {
-        text3.innerHTML = `Вероятность взлома ${randomIntFromInterval(85, 98)}%`;
-        text2.innerHTML = 'Подключено';
-        startTimer();
-        startBtn.classList.add('start-btn-active');
-        state = 'on';
-    }, 2800);
 
     setTimeout(() => {
         powerIconEl.style.fill = "#26F095";
         svgCircle.classList.add('circle-glow')
     }, 1400);
+
+    const showLoading = async (title) => {
+        const ms = 600
+        const startNumber = randomIntFromInterval(10, 80);
+        const diffNum = 100 - startNumber;
+        for (let i = startNumber; i <= 100; i++) {
+            text3.innerHTML = title + ` ${i}%`;
+            const delay = ms / diffNum;
+            await wait(delay);
+        }
+    }
+
+    await showLoading('Подключение к удаленному серверу');
+    await showLoading('Обработка ресурсов');
+    await showLoading('Запрос данных с серверов');
+    await showLoading('Подбор зеркала казино');
+
+    text3.innerHTML = `<span class="probability">Вероятность взлома ${randomIntFromInterval(85, 98)}%</span>`;
+    text2.innerHTML = 'Подключено';
+    startTimer();
+    startBtn.classList.add('start-btn-active');
+    state = 'on';
 };

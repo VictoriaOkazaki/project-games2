@@ -186,3 +186,8 @@ mark,
     box-shadow: 1px 1px 10px rgba(38, 240, 149, .8);
     border: none;
 }
+
+.probability {
+    color: rgb(184, 22, 22);
+    font-size: 15px;
+}
