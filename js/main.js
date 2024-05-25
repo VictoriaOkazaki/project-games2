@@ -85,7 +85,7 @@ containerEl.onclick = async () => {
         const onAnimEnd = () => {
             circleEl.removeEventListener("animationend", onAnimEnd);
             powerIconEl.style.fill = "#C3C7C6";
-            svgCircle.classList.remove('circle-glow');
+            containerEl.classList.remove('circle-glow');
             text2.innerHTML = 'Отключено';
             state = 'off';
         }
@@ -99,7 +99,7 @@ containerEl.onclick = async () => {
 
     setTimeout(() => {
         powerIconEl.style.fill = "#26F095";
-        svgCircle.classList.add('circle-glow')
+        containerEl.classList.add('circle-glow')
     }, 1400);
 
     const showLoading = async (title) => {
