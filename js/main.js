@@ -94,7 +94,7 @@ containerEl.onclick = async () => {
         return;
     }
     state = 'animation';
-    circleEl.style.animation = `circle-anim-on 9s ease-in-out forwards`;
+    circleEl.style.animation = `circle-anim-on 6s ease-in-out forwards`;
     text2.innerHTML = 'Проверка соединения...';
 
     setTimeout(() => {
@@ -114,10 +114,13 @@ containerEl.onclick = async () => {
         await wait(300);
     }
 
+    const time1 = new Date().getTime()
     await showLoading('Подключение к удаленному серверу');
     await showLoading('Обработка ресурсов');
     await showLoading('Запрос данных с серверов');
     await showLoading('Подбор зеркала казино');
+    const time2 = new Date().getTime()
+    console.log('past time', time2 - time1)
 
     text3.innerHTML = `<span class="probability">Вероятность взлома ${randomIntFromInterval(85, 98)}%</span>`;
     text2.innerHTML = 'Подключено';
