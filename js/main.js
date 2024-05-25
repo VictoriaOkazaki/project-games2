@@ -94,7 +94,7 @@ containerEl.onclick = async () => {
         return;
     }
     state = 'animation';
-    circleEl.style.animation = `circle-anim-on 5s ease-in-out forwards`;
+    circleEl.style.animation = `circle-anim-on 9s ease-in-out forwards`;
     text2.innerHTML = 'Проверка соединения...';
 
     setTimeout(() => {
@@ -103,7 +103,7 @@ containerEl.onclick = async () => {
     }, 1400);
 
     const showLoading = async (title) => {
-        const ms = 600
+        const ms = 700
         const startNumber = randomIntFromInterval(10, 80);
         const diffNum = 100 - startNumber;
         for (let i = startNumber; i <= 100; i++) {
@@ -111,6 +111,7 @@ containerEl.onclick = async () => {
             const delay = ms / diffNum;
             await wait(delay);
         }
+        await wait(300);
     }
 
     await showLoading('Подключение к удаленному серверу');
